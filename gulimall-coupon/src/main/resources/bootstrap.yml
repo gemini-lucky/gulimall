@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: gulimall-coupon
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+      active: dev
+
+---
+spring:
+  profiles: dev
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        server-addr: 127.0.0.1:8848
+        namespace: 10656086-dfd0-491f-9676-92bb2dabb635
+        group: DEV_GROUP
+
+---
+spring:
+  profiles: test
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        server-addr: 127.0.0.1:8848
+        namespace: 10656086-dfd0-491f-9676-92bb2dabb635
+        group: TEST_GROUP
