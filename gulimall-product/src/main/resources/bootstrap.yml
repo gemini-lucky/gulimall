@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: gulimall-product
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+      active: dev
+
+---
+spring:
+  profiles: dev
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        server-addr: 127.0.0.1:8848
+        namespace: fcc4597c-eb01-4d80-a9dd-7efbe0cd5cd0
+        group: DEV_GROUP
+
+---
+spring:
+  profiles: test
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        server-addr: 127.0.0.1:8848
+        namespace: fcc4597c-eb01-4d80-a9dd-7efbe0cd5cd0
+        group: TEST_GROUP
