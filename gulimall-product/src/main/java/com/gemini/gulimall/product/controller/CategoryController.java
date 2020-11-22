@@ -37,7 +37,7 @@ public class CategoryController {
     @RequestMapping("/list/tree")
     public R list(){
         List<CategoryEntity> entities = categoryService.listWithTree();
-        return R.ok().put("page", entities);
+        return R.ok().put("data", entities);
     }
 
 
@@ -48,7 +48,7 @@ public class CategoryController {
     public R info(@PathVariable("catId") Long catId){
 		CategoryEntity category = categoryService.getById(catId);
 
-        return R.ok().put("category", category);
+        return R.ok().put("data", category);
     }
 
     /**
@@ -57,6 +57,16 @@ public class CategoryController {
     @RequestMapping("/save")
     public R save(@RequestBody CategoryEntity category){
 		categoryService.save(category);
+
+        return R.ok();
+    }
+
+    /**
+     * 批量修改
+     */
+    @RequestMapping("/update/sort")
+    public R updateSort(@RequestBody CategoryEntity[] categoryEntities){
+        categoryService.updateBatchById(Arrays.asList(categoryEntities));
 
         return R.ok();
     }
@@ -73,10 +83,13 @@ public class CategoryController {
 
     /**
      * 删除
+     * @RequestBody 获取请求题，必须发送 POST 请求
+     * SpringMVC 自动将请求体的数据（json）转为对应的对象
      */
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] catIds){
-		categoryService.removeByIds(Arrays.asList(catIds));
+//		categoryService.removeByIds(Arrays.asList(catIds));
+        categoryService.removeMenuByIds(Arrays.asList(catIds));
 
         return R.ok();
     }

@@ -1,5 +1,5 @@
 #server:
-#  port: 10001
+#  port: 10000
 #
 #spring:
 #  application:
@@ -19,4 +19,8 @@
 #  global-config:
 #    db-config:
 #      id-type: auto
-#
+#      logic-delete-value: 1       # 已删除
+#      logic-not-delete-value: 0   # 未删除
+#logging:
+#  level:
+#    com.gemini.gulimall: debug
