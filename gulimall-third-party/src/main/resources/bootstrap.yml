@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: gulimall-third-party
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: dev
+
+---
+spring:
+  profiles: dev
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        server-addr: 127.0.0.1:8848
+        namespace: 8ee26530-d600-42ff-a5cd-df24e44f6b2f
+        group: DEV_GROUP
+        ext-config:
+          - data-id: oss-dev.yaml
+            group: DEV_GROUP
+            refresh: true
+
+---
+spring:
+  profiles: test
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        server-addr: 127.0.0.1:8848
+        namespace: 8ee26530-d600-42ff-a5cd-df24e44f6b2f
+        group: TEST_GROUP
