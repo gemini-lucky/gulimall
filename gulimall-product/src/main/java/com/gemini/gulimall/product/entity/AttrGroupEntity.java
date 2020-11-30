@@ -1,5 +1,6 @@
 package com.gemini.gulimall.product.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -20,7 +21,7 @@ public class AttrGroupEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 分组id
+	 * 分组 id
 	 */
 	@TableId
 	private Long attrGroupId;
@@ -41,8 +42,13 @@ public class AttrGroupEntity implements Serializable {
 	 */
 	private String icon;
 	/**
-	 * 所属分类id
+	 * 所属分类 id
 	 */
 	private Long catelogId;
+	/**
+	 * 所属分类完整路径
+	 */
+	@TableField(exist = false)
+	private Long[] catelogPath;
 
 }

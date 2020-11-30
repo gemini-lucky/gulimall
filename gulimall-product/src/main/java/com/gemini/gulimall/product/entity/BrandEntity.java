@@ -9,6 +9,7 @@ import java.util.Date;
 import com.gemini.common.valid.AddGroup;
 import com.gemini.common.valid.ListValue;
 import com.gemini.common.valid.UpdateGroup;
+import com.gemini.common.valid.UpdateStatusGroup;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
@@ -51,13 +52,14 @@ public class BrandEntity implements Serializable {
 	/**
 	 * 显示状态[0-不显示；1-显示]
 	 */
-	@ListValue(vals = {0, 1}, groups = {AddGroup.class, UpdateGroup.class})
+	@NotNull(groups = {AddGroup.class, UpdateStatusGroup.class})
+	@ListValue(vals = {0, 1}, groups = {AddGroup.class, UpdateStatusGroup.class})
 	private Integer showStatus;
 	/**
 	 * 检索首字母
 	 */
     @NotEmpty(groups = {AddGroup.class})
-	@Pattern(regexp = "/^[a-zA-Z]$/", message = "检索首字母只能是 a-z 或 A-Z", groups = {AddGroup.class, UpdateGroup.class})
+	@Pattern(regexp = "^[a-zA-Z]$", message = "检索首字母只能是 a-z 或 A-Z", groups = {AddGroup.class, UpdateGroup.class})
 	private String firstLetter;
 	/**
 	 * 排序

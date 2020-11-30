@@ -2,6 +2,8 @@ package com.gemini.gulimall.product.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -57,6 +59,34 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         // TODO 检查当前删除的菜单是否被别的地方引用
         // 逻辑删除
         baseMapper.deleteBatchIds(asList);
+    }
+
+    /**
+     * 找到 catelogId 的完整路径
+     * [父/子/孙]
+     * [2/25/225]
+     * @param catelogId
+     * @return
+     */
+    @Override
+    public Long[] findCatelogPath(Long catelogId) {
+        List<Long> catelogPaths = new ArrayList<>();
+
+        List<Long> parentPath = findParentPath(catelogId, catelogPaths);
+        Collections.reverse(parentPath);
+
+        return parentPath.toArray(new Long[parentPath.size()]);
+    }
+
+    private List<Long> findParentPath(Long catelogId, List<Long> catelogPaths) {
+        // 1.收集当前节点的 id
+        catelogPaths.add(catelogId);
+        CategoryEntity byId = this.getById(catelogId);
+        if (0 != byId.getParentCid()) {
+            findParentPath(byId.getParentCid(), catelogPaths);
+        }
+
+        return catelogPaths;
     }
 
     /**
