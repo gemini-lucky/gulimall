@@ -1,5 +1,6 @@
 package com.gemini.gulimall.product.service.impl;
 
+import com.gemini.gulimall.product.service.CategoryBrandRelationService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import com.gemini.common.utils.Query;
 import com.gemini.gulimall.product.dao.CategoryDao;
 import com.gemini.gulimall.product.entity.CategoryEntity;
 import com.gemini.gulimall.product.service.CategoryService;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 
@@ -26,6 +28,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
 //    @Resource
 //    CategoryDao categoryDao;
+
+    @Resource
+    CategoryBrandRelationService categoryBrandRelationService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -76,6 +81,19 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         Collections.reverse(parentPath);
 
         return parentPath.toArray(new Long[parentPath.size()]);
+    }
+
+    /**
+     * 级联更新所有关联的数据
+     * @param category
+     * @return
+     */
+    @Override
+    public void updateCascade(CategoryEntity category) {
+        this.updateById(category);
+        if (!StringUtils.isEmpty(category.getName())) {
+            categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
+        }
     }
 
     private List<Long> findParentPath(Long catelogId, List<Long> catelogPaths) {
